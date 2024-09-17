@@ -36,11 +36,10 @@
         case '/user/changepwd':
             require 'includes/user/changepwd.php';
             break;
-        // post
         case '/post/add':
             require 'includes/post/add.php';
             break;
-        // delete
+        // setup the action route for delete post
         case '/post/delete':
             require 'includes/post/delete.php';
             break;
@@ -48,6 +47,7 @@
         case '/post/edit':
             require 'includes/post/edit.php';
             break;
+        
         // pages
         case '/dashboard':
             require 'pages/dashboard.php';

@@ -1,28 +1,25 @@
 <?php
 
-// 1. Connect to the Database
-$database = connectToDB();
+    $database = connectToDB();
 
-// 2. Get the form data using $_POST
-$title = $_POST['title'];
-$content = $_POST['content'];
-$user_id = $_SESSION['user_id']; 
+    // 2. get all the data from the form using $_POST
+    $title = $_POST['title'];
+    $content = $_POST['content'];
 
-// 3. Error Checking
-if (empty($title) || empty($content)) {
-    setError("Title and content are required.", '/manage-posts-add');
-} else {
-    // 4. Insert the new post into the "posts" table
-    $sql = "INSERT INTO posts (title, content, user_id, status) VALUES (:title, :content, :user_id, 'pending')";
-    
-    $query = $database->prepare($sql);
+    if ( empty( $title ) || empty( $content ) ) {
+        setError( "All the fields are required.", '/manage-posts-add' );
+    }
+
+    $sql = "INSERT INTO posts (`title`,`content`,`user_id`) VALUES (:title, :content, :user_id)";
+    // prepare (put everything into the bowl)
+    $query = $database->prepare( $sql );
+    // execute (cook it)
     $query->execute([
         'title' => $title,
         'content' => $content,
-        'user_id' => $user_id
+        'user_id' => $_SESSION['user']['id']
     ]);
-
-    // 5. Redirect back to the Manage Posts page with a success message
+    
+    // 5. redireact back to /manage-users page
     header("Location: /manage-posts");
     exit;
-}
